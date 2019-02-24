@@ -1,0 +1,38 @@
+class Solution {
+    public int myAtoi(String str) {
+        if(str == null ||str.length() == 0) return 0;
+        
+        //Trick here where we use long instead of int in case of overflow
+        long ret = 0;
+        int sign = 1;
+        str = str.trim();
+        
+        if(str.isEmpty()) return 0;
+        int startIndex = 0;
+        if(str.charAt(0) == '-'){
+            sign = -1;
+            startIndex++;
+        }else if(str.charAt(0) == '+'){
+            sign = 1; 
+            startIndex++;
+        }
+        
+        for(int i = startIndex; i < str.length(); i++){
+            if(!Character.isDigit(str.charAt(i))){
+                return (int) ret * sign; 
+            }
+            ret = str.charAt(i) - '0'  + ret * 10;
+            //Overflow
+            if(sign == 1 && ret > Integer.MAX_VALUE){
+                return Integer.MAX_VALUE;
+            }
+            System.out.println(ret);
+            
+            if(sign == -1 && ret >Integer.MAX_VALUE){
+                return Integer.MIN_VALUE  ;
+            }
+        }
+        return (int) ret * sign;
+        
+    }
+}
